@@ -1,6 +1,9 @@
+import json
+
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
 
+import ethereum
 import walletsSQL
 
 app = Flask(__name__)
@@ -18,8 +21,13 @@ class Wallets(Resource):
         return walletsSQL.select_all()
 
     def put(self):
-        print(request.form['public_key'] + request.form['private_key'])
-        return walletsSQL.insert(request.form['public_key'], request.form['private_key'])
+        new_wallet = ethereum.create_ethereum_wallet()
+        # Print all wallet information's
+        x = json.dumps(new_wallet.dumps(), indent=4, ensure_ascii=False)
+        print(x)
+        y = json.loads(x)
+        walletsSQL.insert(y["public_key"], y["private_key"])
+        return "Hai creato un wallet con indirizzo = " + y["address"]
 
 
 api.add_resource(Wallets, '/wallets')
