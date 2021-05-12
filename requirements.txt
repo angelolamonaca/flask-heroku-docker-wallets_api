@@ -3,3 +3,4 @@ Flask-RESTful
 Flask-MySQL
 eth-wallet
 bitcoin~=1.1.42
+gunicorn
