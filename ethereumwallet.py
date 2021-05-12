@@ -2,7 +2,7 @@ from eth_wallet import Wallet
 from eth_wallet.utils import generate_entropy
 
 
-def create_ethereum_wallet():
+def create_wallet():
     # 128 strength entropy
     entropy = generate_entropy(strength=128)
     # Secret passphrase

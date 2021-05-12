@@ -1,6 +1,4 @@
-import json
 import os
-import ethereum
 
 from flaskext.mysql import MySQL
 from flask import Flask, jsonify
@@ -21,20 +19,26 @@ connection = mysql.connect()
 cursor = connection.cursor()
 
 
-def select_all():
-    cursor.execute('select * from wallets_mysql_schema.ethereum')
-    r = [dict((cursor.description[i][0], value)
-              for i, value in enumerate(row)) for row in cursor.fetchall()]
-    return jsonify({'wallets': r})
-
-
-def insert(public_key, private_key):
+def insert_bitcoin_wallet(private_key, public_key, address):
     try:
-        query = 'INSERT INTO wallets_mysql_schema.ethereum (public_key, private_key) VALUES (%s,%s)'
-        t = (public_key, private_key)
+        query = 'INSERT INTO wallets_mysql_schema.bitcoin (public_key, private_key, address) VALUES (%s,%s,%s)'
+        t = (private_key, public_key, address)
         cursor.execute(query, t)
         connection.commit()
         return True
     except Exception as e:
-        print("Problem inserting into db: " + str(e))
+        print("Problem inserting bitcoin wallet into db: " + str(e))
+        return False
+
+
+def insert_ethereum_wallet(mnemonic, private_key, public_key, address):
+    try:
+        query = 'INSERT INTO wallets_mysql_schema.ethereum (mnemonic, private_key, public_key, address) ' \
+                'VALUES (%s,%s,%s,%s)'
+        t = (mnemonic, private_key, public_key, address)
+        cursor.execute(query, t)
+        connection.commit()
+        return True
+    except Exception as e:
+        print("Problem inserting ethereum wallet into db: " + str(e))
         return False
