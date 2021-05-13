@@ -9,6 +9,9 @@ api = Api(app)
 
 
 class CreateWallet(Resource):
+    def get(self):
+        return 'Hello World'
+
     def put(self, blockchain):
         global json_to_return
         if blockchain == 'bitcoin':
