@@ -9,7 +9,7 @@ api = Api(app)
 
 
 class CreateWallet(Resource):
-    def get(self):
+    def get(self, blockchain):
         return 'Hello World'
 
     def put(self, blockchain):
