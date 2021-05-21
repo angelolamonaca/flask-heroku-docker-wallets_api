@@ -21,7 +21,7 @@ cursor = connection.cursor()
 
 def insert_bitcoin_wallet(private_key, public_key, address):
     try:
-        query = 'INSERT INTO wallets_mysql_schema.bitcoin (public_key, private_key, address) VALUES (%s,%s,%s)'
+        query = 'INSERT INTO satoshiphyton.bitcoin (public_key, private_key, address) VALUES (%s,%s,%s)'
         t = (private_key, public_key, address)
         cursor.execute(query, t)
         connection.commit()
@@ -33,7 +33,7 @@ def insert_bitcoin_wallet(private_key, public_key, address):
 
 def insert_ethereum_wallet(mnemonic, private_key, public_key, address):
     try:
-        query = 'INSERT INTO wallets_mysql_schema.ethereum (mnemonic, private_key, public_key, address) ' \
+        query = 'INSERT INTO satoshiphyton.ethereum (mnemonic, private_key, public_key, address) ' \
                 'VALUES (%s,%s,%s,%s)'
         t = (mnemonic, private_key, public_key, address)
         cursor.execute(query, t)
